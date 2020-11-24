@@ -1,0 +1,768 @@
+basePath: /api/v1
+definitions:
+  controllers.Room:
+    properties:
+      roomInfo:
+        type: integer
+      roomStatus:
+        type: integer
+      roomType:
+        type: integer
+    type: object
+  ent.Room:
+    properties:
+      edges:
+        $ref: '#/definitions/ent.RoomEdges'
+        description: |-
+          Edges holds the relations/edges for other nodes in the graph.
+          The values are being populated by the RoomQuery when eager-loading is set.
+        type: object
+      id:
+        description: ID of the ent.
+        type: integer
+    type: object
+  ent.RoomEdges:
+    properties:
+      roominfo:
+        $ref: '#/definitions/ent.RoomInfo'
+        description: Roominfo holds the value of the roominfo edge.
+        type: object
+      roomstatus:
+        $ref: '#/definitions/ent.RoomStatus'
+        description: Roomstatus holds the value of the roomstatus edge.
+        type: object
+      roomtype:
+        $ref: '#/definitions/ent.RoomType'
+        description: Roomtype holds the value of the roomtype edge.
+        type: object
+    type: object
+  ent.RoomInfo:
+    properties:
+      Info:
+        description: Info holds the value of the "Info" field.
+        type: string
+      edges:
+        $ref: '#/definitions/ent.RoomInfoEdges'
+        description: |-
+          Edges holds the relations/edges for other nodes in the graph.
+          The values are being populated by the RoomInfoQuery when eager-loading is set.
+        type: object
+      id:
+        description: ID of the ent.
+        type: integer
+    type: object
+  ent.RoomInfoEdges:
+    properties:
+      room:
+        description: Room holds the value of the room edge.
+        items:
+          $ref: '#/definitions/ent.Room'
+        type: array
+    type: object
+  ent.RoomStatus:
+    properties:
+      RoomStatus:
+        description: RoomStatus holds the value of the "RoomStatus" field.
+        type: string
+      edges:
+        $ref: '#/definitions/ent.RoomStatusEdges'
+        description: |-
+          Edges holds the relations/edges for other nodes in the graph.
+          The values are being populated by the RoomStatusQuery when eager-loading is set.
+        type: object
+      id:
+        description: ID of the ent.
+        type: integer
+    type: object
+  ent.RoomStatusEdges:
+    properties:
+      room:
+        description: Room holds the value of the room edge.
+        items:
+          $ref: '#/definitions/ent.Room'
+        type: array
+    type: object
+  ent.RoomType:
+    properties:
+      Cost:
+        description: Cost holds the value of the "Cost" field.
+        type: integer
+      RoomType:
+        description: RoomType holds the value of the "RoomType" field.
+        type: string
+      edges:
+        $ref: '#/definitions/ent.RoomTypeEdges'
+        description: |-
+          Edges holds the relations/edges for other nodes in the graph.
+          The values are being populated by the RoomTypeQuery when eager-loading is set.
+        type: object
+      id:
+        description: ID of the ent.
+        type: integer
+    type: object
+  ent.RoomTypeEdges:
+    properties:
+      room:
+        description: Room holds the value of the room edge.
+        items:
+          $ref: '#/definitions/ent.Room'
+        type: array
+    type: object
+  gin.H:
+    additionalProperties: true
+    type: object
+host: localhost:8080
+info:
+  contact:
+    email: support@swagger.io
+    name: API Support
+    url: http://www.swagger.io/support
+  description: This is a sample server for SUT SE 2563
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  termsOfService: http://swagger.io/terms/
+  title: SUT SA Example API
+  version: "1.0"
+paths:
+  /room:
+    get:
+      description: list room entities
+      operationId: list-room
+      parameters:
+      - description: Limit
+        in: query
+        name: limit
+        type: integer
+      - description: Offset
+        in: query
+        name: offset
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/ent.Room'
+            type: array
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/gin.H'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/gin.H'
+      summary: List room entities
+    post:
+      consumes:
+      - application/json
+      description: Create room
+      operationId: create-room
+      parameters:
+      - description: Room entity
+        in: body
+        name: room
+        required: true
+        schema:
+          $ref: '#/definitions/controllers.Room'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/ent.Room'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/gin.H'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/gin.H'
+      summary: Create room
+  /room/{id}:
+    delete:
+      description: get room by ID
+      operationId: delete-room
+      parameters:
+      - description: Room ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/gin.H'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/gin.H'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/gin.H'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/gin.H'
+      summary: Delete a room entity by ID
+    get:
+      description: get room by ID
+      operationId: get-room
+      parameters:
+      - description: Room ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/ent.Room'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/gin.H'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/gin.H'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/gin.H'
+      summary: Get a room entity by ID
+    put:
+      consumes:
+      - application/json
+      description: update room by ID
+      operationId: update-room
+      parameters:
+      - description: Room ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: Room entity
+        in: body
+        name: room
+        required: true
+        schema:
+          $ref: '#/definitions/ent.Room'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/ent.Room'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/gin.H'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/gin.H'
+      summary: Update a room entity by ID
+  /roominfo:
+    get:
+      description: list roominfo entities
+      operationId: list-roominfo
+      parameters:
+      - description: Limit
+        in: query
+        name: limit
+        type: integer
+      - description: Offset
+        in: query
+        name: offset
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/ent.RoomInfo'
+            type: array
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/gin.H'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/gin.H'
+      summary: List roominfo entities
+    post:
+      consumes:
+      - application/json
+      description: Create roominfo
+      operationId: create-roominfo
+      parameters:
+      - description: RoomInfo entity
+        in: body
+        name: roominfo
+        required: true
+        schema:
+          $ref: '#/definitions/ent.RoomInfo'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/ent.RoomInfo'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/gin.H'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/gin.H'
+      summary: Create roominfo
+  /roominfo/{id}:
+    delete:
+      description: get roominfo by ID
+      operationId: delete-roominfo
+      parameters:
+      - description: RoomInfo ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/gin.H'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/gin.H'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/gin.H'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/gin.H'
+      summary: Delete a roominfo entity by ID
+    get:
+      description: get roominfo by ID
+      operationId: get-roominfo
+      parameters:
+      - description: RoomInfo ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/ent.RoomInfo'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/gin.H'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/gin.H'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/gin.H'
+      summary: Get a roominfo entity by ID
+    put:
+      consumes:
+      - application/json
+      description: update roominfo by ID
+      operationId: update-roominfo
+      parameters:
+      - description: RoomInfo ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: RoomInfo entity
+        in: body
+        name: roominfo
+        required: true
+        schema:
+          $ref: '#/definitions/ent.RoomInfo'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/ent.RoomInfo'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/gin.H'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/gin.H'
+      summary: Update a roominfo entity by ID
+  /roomstatus:
+    get:
+      description: list roomstatus entities
+      operationId: list-roomstatus
+      parameters:
+      - description: Limit
+        in: query
+        name: limit
+        type: integer
+      - description: Offset
+        in: query
+        name: offset
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/ent.RoomStatus'
+            type: array
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/gin.H'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/gin.H'
+      summary: List roomstatus entities
+    post:
+      consumes:
+      - application/json
+      description: Create roomstatus
+      operationId: create-roomstatus
+      parameters:
+      - description: RoomStatus entity
+        in: body
+        name: roomstatus
+        required: true
+        schema:
+          $ref: '#/definitions/ent.RoomStatus'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/ent.RoomStatus'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/gin.H'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/gin.H'
+      summary: Create roomstatus
+  /roomstatus/{id}:
+    delete:
+      description: get roomstatus by ID
+      operationId: delete-roomstatus
+      parameters:
+      - description: RoomStatus ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/gin.H'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/gin.H'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/gin.H'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/gin.H'
+      summary: Delete a roomstatus entity by ID
+    get:
+      description: get roomstatus by ID
+      operationId: get-roomstatus
+      parameters:
+      - description: RoomStatus ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/ent.RoomStatus'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/gin.H'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/gin.H'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/gin.H'
+      summary: Get a roomstatus entity by ID
+    put:
+      consumes:
+      - application/json
+      description: update roomstatus by ID
+      operationId: update-roomstatus
+      parameters:
+      - description: RoomStatus ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: RoomStatus entity
+        in: body
+        name: roomstatus
+        required: true
+        schema:
+          $ref: '#/definitions/ent.RoomStatus'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/ent.RoomStatus'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/gin.H'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/gin.H'
+      summary: Update a roomstatus entity by ID
+  /roomtype:
+    get:
+      description: list roomtype entities
+      operationId: list-roomtype
+      parameters:
+      - description: Limit
+        in: query
+        name: limit
+        type: integer
+      - description: Offset
+        in: query
+        name: offset
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/ent.RoomType'
+            type: array
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/gin.H'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/gin.H'
+      summary: List roomtype entities
+    post:
+      consumes:
+      - application/json
+      description: Create roomtype
+      operationId: create-roomtype
+      parameters:
+      - description: RoomType entity
+        in: body
+        name: roomtype
+        required: true
+        schema:
+          $ref: '#/definitions/ent.RoomType'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/ent.RoomType'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/gin.H'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/gin.H'
+      summary: Create roomtype
+  /roomtype/{id}:
+    delete:
+      description: get roomtype by ID
+      operationId: delete-roomtype
+      parameters:
+      - description: RoomType ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/gin.H'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/gin.H'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/gin.H'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/gin.H'
+      summary: Delete a roomtype entity by ID
+    get:
+      description: get roomtype by ID
+      operationId: get-roomtype
+      parameters:
+      - description: RoomType ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/ent.RoomType'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/gin.H'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/gin.H'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/gin.H'
+      summary: Get a roomtypes entity by ID
+    put:
+      consumes:
+      - application/json
+      description: update roomtype by ID
+      operationId: update-roomtype
+      parameters:
+      - description: RoomType ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: RoomType entity
+        in: body
+        name: roomtype
+        required: true
+        schema:
+          $ref: '#/definitions/ent.RoomType'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/ent.RoomType'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/gin.H'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/gin.H'
+      summary: Update a roomtype entity by ID
+securityDefinitions:
+  ApiKeyAuth:
+    in: header
+    name: Authorization
+    type: apiKey
+  BasicAuth:
+    type: basic
+  OAuth2AccessCode:
+    authorizationUrl: https://example.com/oauth/authorize
+    flow: accessCode
+    scopes:
+      admin: ' Grants read and write access to administrative information'
+    tokenUrl: https://example.com/oauth/token
+    type: oauth2
+  OAuth2Application:
+    flow: application
+    scopes:
+      admin: ' Grants read and write access to administrative information'
+      write: ' Grants write access'
+    tokenUrl: https://example.com/oauth/token
+    type: oauth2
+  OAuth2Implicit:
+    authorizationUrl: https://example.com/oauth/authorize
+    flow: implicit
+    scopes:
+      admin: ' Grants read and write access to administrative information'
+      write: ' Grants write access'
+    type: oauth2
+  OAuth2Password:
+    flow: password
+    scopes:
+      admin: ' Grants read and write access to administrative information'
+      read: ' Grants read access'
+      write: ' Grants write access'
+    tokenUrl: https://example.com/oauth/token
+    type: oauth2
+swagger: "2.0"
